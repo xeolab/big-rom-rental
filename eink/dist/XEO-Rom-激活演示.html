@@ -54,6 +54,7 @@ h1{margin:0 0 10px;font-size:1.75em;line-height:1.25;font-weight:900;letter-spac
 .list{display:flex;flex-direction:column;gap:10px}
 .opt{display:flex;align-items:center;gap:14px;width:100%;min-height:64px;padding:10px 14px;border:1.5px solid var(--ink);background:var(--paper);text-align:left}
 .opt .ic{flex:none;width:34px;height:34px}
+.opt .tag{display:inline-block;margin-left:6px;padding:0 5px;border:1.5px solid var(--ink);font-size:11px;font-weight:800;letter-spacing:.5px;vertical-align:2px}
 .opt .ic svg{width:100%;height:100%;display:block}
 .opt .tx{flex:1;min-width:0}
 .opt .tx b{display:block;font-size:1em;font-weight:800}
@@ -2441,6 +2442,7 @@ var qrcode = function() {
   const SETUP = ['welcome', 'wifi', 'activate', 'audio', 'pod', 'big']; // 6 步，对应原方案 §3.2 配图
   const WIFI = [{ ssid: 'XEO_Cinema', lock: true }, { ssid: 'Cinema_WiFi', lock: true }, { ssid: 'XEO_Guest', lock: false }, { ssid: '其他网络…', lock: true, other: true }];
   const AUDIO = [
+    { id: 'x202', name: 'XEO 202 蓝牙音箱', desc: '蓝牙 5.4 · 支持 LDAC · 一键房间声场校准', icon: 'x202', tag: 'XEO' }, // 规格摘自 xeo.io/202
     { id: 'bt', name: '蓝牙耳机', desc: '搜索并连接蓝牙耳机', icon: 'headphones' },
     { id: 'wired', name: '有线耳机', desc: '通过 3.5mm 或 USB-C 连接', icon: 'earbuds' },
     { id: 'none', name: '暂不使用耳机', desc: '使用内置扬声器（不推荐）', icon: 'speaker' },
@@ -2466,6 +2468,7 @@ var qrcode = function() {
   function fmtTime(d) { return (d.getMonth() + 1) + '月' + d.getDate() + '日 ' + pad(d.getHours()) + ':' + pad(d.getMinutes()); }
   const ICON = {
     wifi: '<svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round"><path d="M2 9a15 15 0 0 1 20 0M5.5 12.5a10 10 0 0 1 13 0M9 16a5 5 0 0 1 6 0"/><circle cx="12" cy="19.5" r="1.4" fill="#000"/></svg>',
+    x202: '<svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><rect x="6" y="2" width="12" height="20" rx="2"/><circle cx="12" cy="7" r="1.6" fill="#000"/><circle cx="12" cy="15" r="3.6"/></svg>',
     headphones: '<svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4.5" height="7" rx="1" fill="#000"/><rect x="16.5" y="14" width="4.5" height="7" rx="1" fill="#000"/></svg>',
     earbuds: '<svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><circle cx="7" cy="6" r="3" fill="#000"/><circle cx="17" cy="6" r="3" fill="#000"/><path d="M7 9v6a5 5 0 0 0 10 0V9M12 20v3"/></svg>',
     speaker: '<svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><path d="M4 9h4l5-4v14l-5-4H4z" fill="#000"/><path d="M17 9l4 6M21 9l-4 6"/></svg>',
@@ -2548,19 +2551,13 @@ var qrcode = function() {
 
     audio: () => top(3) + '<section class="screen"><h1>连接音频设备</h1><p class="lead">选择你要使用的音频设备，获得更好的沉浸体验。</p><div class="list" role="radiogroup">' +
       AUDIO.map(a => '<button class="opt" role="radio" aria-checked="' + (S.audio === a.id) + '" data-act="audio" data-id="' + a.id + '"><span class="ic">' + ICON[a.icon] + '</span>' +
-        '<span class="tx"><b>' + a.name + '</b><small>' + a.desc + '</small></span><span class="mark"></span></button>').join('') +
-      '</div>' + (S.audio === 'bt' ? '<p class="note">演示：真机上这里会打开系统蓝牙配对。</p>' : '') + '<div class="grow"></div>' + actions('prev', 'next', '下一步', !S.audio) + '</section>',
+        '<span class="tx"><b>' + a.name + (a.tag ? ' <span class="tag">' + a.tag + '</span>' : '') + '</b><small>' + a.desc + '</small></span><span class="mark"></span></button>').join('') +
+      '</div>' + (S.audio === 'bt' || S.audio === 'x202' ? '<p class="note">演示：真机上这里会打开系统蓝牙配对。</p>' : '') + '<div class="grow"></div>' + actions('prev', 'next', '下一步', !S.audio) + '</section>',
 
     pod: () => top(4) + '<section class="screen"><p class="kicker">可选</p><h1>体验更完整的沉浸感<br>XEO Pod</h1>' +
       '<p class="lead">半封闭 20 面体设计，带来 9.2.4 沉浸式音效与触觉反馈，让虚拟影院更完整。</p><div class="illus">' + ILLUS.pod + '</div>' +
       '<div class="feats"><div class="feat">' + ICON.sound + '9.2.4<br>沉浸声场</div><div class="feat">' + ICON.haptic + '触觉反馈<br>身临其境</div><div class="feat">' + ICON.shield + '私密沉浸<br>专注观影</div></div>' +
-      '<div class="grow"></div><div class="actions"><button class="btn" data-act="skip">跳过</button><button class="btn primary" data-act="podMore">了解更多</button></div></section>',
-
-    podMore: () => top(4) + '<section class="screen"><p class="kicker">XEO POD · 了解更多</p><h1>把巨幕，带进一个<br>只属于你的空间</h1>' +
-      '<ol class="steps"><li><span class="n">1</span><span><b>半封闭 20 面体设计</b><br>私密沉浸，专注观影。</span></li>' +
-      '<li><span class="n">2</span><span><b>9.2.4 沉浸声场</b><br>为虚拟影院补上更完整的声音。</span></li>' +
-      '<li><span class="n">3</span><span><b>触觉反馈</b><br>身临其境的临场感。</span></li></ol>' +
-      '<p class="note">XEO Pod 为可选配件，不影响本次租赁设备的使用；规格以正式产品资料为准。</p><div class="grow"></div>' + actions('podBack', 'next', '继续') + '</section>',
+      '<p class="note">可选配件，不影响本次租赁设备的使用；规格以正式产品资料为准。</p><div class="grow"></div>' + actions('prev', 'next', '继续') + '</section>',
 
     big: () => top(5) + '<section class="screen"><h1>连接并佩戴 BIG</h1><p class="lead">最后一步，进入沉浸观影世界。</p><div class="illus">' + ILLUS.big + '</div>' +
       '<ol class="steps"><li><span class="n">1</span><span>用 USB-C 线将 BIG 连接到 Rom</span></li><li><span class="n">2</span><span>戴上 BIG，调整绑带至稳固舒适</span></li>' +
@@ -2622,11 +2619,8 @@ var qrcode = function() {
   function persist() { save({ activated: S.step === 'done' || S.step === 'home' || load().activated, wifi: S.wifi, audio: S.audio }); }
 
   const ACT = {
-    next() { const i = SETUP.indexOf(S.step); go(S.step === 'podMore' ? 'big' : SETUP[i + 1]); },
+    next() { go(SETUP[SETUP.indexOf(S.step) + 1]); },
     prev() { const i = SETUP.indexOf(S.step); go(SETUP[Math.max(0, i - 1)]); },
-    skip() { go('big'); },
-    podMore() { go('podMore'); },
-    podBack() { go('pod'); },
     wifi(el) { S.wifiPick = el.dataset.ssid; S.wifiConnected = false; S.wifi = null; render(); const f = $('#ssid') || $('#pw'); if (f) f.focus(); },
     connect() {
       const other = WIFI.find(w => w.ssid === S.wifiPick && w.other), typed = other && $('#ssid') ? $('#ssid').value.trim() : '';
