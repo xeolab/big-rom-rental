@@ -2445,7 +2445,7 @@ var qrcode = function() {
     { id: 'x202', name: 'XEO 202 蓝牙音箱', desc: '蓝牙 5.4 · 支持 LDAC · 一键房间声场校准', icon: 'x202', tag: 'XEO' }, // 规格摘自 xeo.io/202
     { id: 'bt', name: '蓝牙耳机', desc: '搜索并连接蓝牙耳机', icon: 'headphones' },
     { id: 'wired', name: '有线耳机', desc: '通过 3.5mm 或 USB-C 连接', icon: 'earbuds' },
-    { id: 'none', name: '暂不使用耳机', desc: '使用内置扬声器（不推荐）', icon: 'speaker' },
+    { id: 'none', name: '暂不使用耳机', desc: '不使用音频（不推荐）', icon: 'speaker' },
   ];
 
   const load = () => { try { return JSON.parse(localStorage.getItem(STORE)) || {}; } catch (e) { return {}; } };
