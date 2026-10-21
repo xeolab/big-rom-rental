@@ -31,7 +31,7 @@ targets:
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         CODE_SIGN_STYLE: Automatic
         # Pick your team in Xcode (Signing & Capabilities). A free personal team works: no paid-only capabilities are used.
-        DEVELOPMENT_TEAM: ""
+        DEVELOPMENT_TEAM: D2MF2F9GBN   # 负责人个人团队；别人构建时在 Xcode Signing 里换成自己的
         GENERATE_INFOPLIST_FILE: NO
     info:
       path: XEORental/Info.plist
