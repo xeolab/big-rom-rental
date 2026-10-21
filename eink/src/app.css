@@ -48,6 +48,7 @@ h1{margin:0 0 10px;font-size:1.75em;line-height:1.25;font-weight:900;letter-spac
 .list{display:flex;flex-direction:column;gap:10px}
 .opt{display:flex;align-items:center;gap:14px;width:100%;min-height:64px;padding:10px 14px;border:1.5px solid var(--ink);background:var(--paper);text-align:left}
 .opt .ic{flex:none;width:34px;height:34px}
+.opt .tag{display:inline-block;margin-left:6px;padding:0 5px;border:1.5px solid var(--ink);font-size:11px;font-weight:800;letter-spacing:.5px;vertical-align:2px}
 .opt .ic svg{width:100%;height:100%;display:block}
 .opt .tx{flex:1;min-width:0}
 .opt .tx b{display:block;font-size:1em;font-weight:800}
