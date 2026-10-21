@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>XEO 租赁入口二维码</title>
+<style>
+*{box-sizing:border-box}
+@page{size:A4 portrait;margin:14mm}
+html,body{margin:0;background:#fff;color:#000;font-family:"Noto Sans CJK SC","Source Han Sans SC","PingFang SC",Geist,"Helvetica Neue",sans-serif}
+.page{max-width:180mm;min-height:260mm;margin:0 auto;padding:12mm 10mm;border-left:3mm solid #6638B6;display:flex;flex-direction:column;align-items:center;text-align:center}
+.logo{height:12mm;align-self:flex-start}.logo svg{height:100%;width:auto;display:block}
+h1{font-size:15mm;line-height:1.15;margin:14mm 0 4mm;font-weight:900;letter-spacing:-.3mm}
+.sub{font-size:5mm;margin:0 0 10mm;line-height:1.6}
+.qr-frame{border:1mm solid #000;padding:6mm;background:#fff}
+canvas{display:block;width:110mm!important;height:110mm!important;image-rendering:pixelated;image-rendering:crisp-edges}
+.cap{margin-top:6mm;font-size:4mm;font-weight:700;letter-spacing:.4mm}
+.steps{margin:12mm 0 0;padding:0;list-style:none;font-size:4.6mm;line-height:1.8;text-align:left}
+.foot{margin-top:auto;font-size:3.2mm;color:#4A4A4A}
+@media screen{body{padding:16px}.page{border:1px solid #D9DDE3;border-left:3mm solid #6638B6}}
+</style></head>
+<body>
+<template id="logo-src"><!--@LOGO@--></template>
+<div class="page">
+ <div class="logo" id="logo"></div>
+ <h1>扫码开始租赁</h1>
+ <p class="sub">XEO BIG + Rom 自助租赁<br>先体验，后租赁 · 把巨幕装进口袋</p>
+ <div class="qr-frame"><canvas id="qr" role="img" aria-label="租赁入口二维码"></canvas></div>
+ <div class="cap" id="cap"></div>
+ <ol class="steps"><li>① 打开 iPhone 相机，对准二维码</li><li>② 点击提示「在 XEO 租赁中打开」</li><li>③ 登录后按步骤完成配件适配与下单</li></ol>
+ <div class="foot">演示用柜机二维码（静态）· 打印后代替柜机屏幕使用</div>
+</div>
+<script>/*@QR@*/</script>
+<script>
+// 内容是与 iOS 端的契约，见 docs/tech/01-架构与双端契约.md §2。
+(() => {
+  const PAYLOAD = 'xeorental://rent?cabinet=XEO-IMAX-DEMO-01';
+  document.getElementById('logo').innerHTML = document.getElementById('logo-src').innerHTML;
+  const q = qrcode(0, 'M'); q.addData(PAYLOAD); q.make();
+  const n = q.getModuleCount(), quiet = 4, total = n + quiet * 2, px = 24; // high-res bitmap, scaled down crisply when printed
+  const c = document.getElementById('qr'); c.width = c.height = total * px; c.dataset.payload = PAYLOAD;
+  const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height); g.fillStyle = '#000';
+  for (let r = 0; r < n; r++) for (let k = 0; k < n; k++) if (q.isDark(r, k)) g.fillRect((k + quiet) * px, (r + quiet) * px, px, px);
+  document.getElementById('cap').textContent = '柜机 XEO-IMAX-DEMO-01';
+})();
+</script>
+</body></html>

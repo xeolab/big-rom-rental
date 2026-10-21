@@ -1,0 +1,1 @@
+[{"eval":"localStorage.clear();location.reload();1"},{"wait":500},{"eval":"document.querySelector('[data-act=next]').click();document.querySelector('[data-ssid=\"其他网络…\"]').click();document.getElementById('ssid').value='My_Home';document.querySelector('[data-act=connect]').click();document.querySelector('.status').textContent"},{"shot":"other-wifi"}]

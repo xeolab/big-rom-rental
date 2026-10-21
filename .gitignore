@@ -1,0 +1,12 @@
+.DS_Store
+# Xcode / SwiftPM
+build/
+DerivedData/
+.build/
+.swiftpm/
+*.xcuserstate
+xcuserdata/
+# 飞书原文参考图：内部讨论稿素材，只放本地、不入公开仓库
+docs/reference/
+# blurt 录屏会话
+.blurt/

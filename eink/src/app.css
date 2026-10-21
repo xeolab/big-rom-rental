@@ -1,0 +1,106 @@
+/* XEO Rom 激活演示 — e-ink rules: no transition / animation / smooth scroll, black on white, ≥48px targets. */
+*,*::before,*::after{box-sizing:border-box;transition:none!important;animation:none!important;scroll-behavior:auto!important}
+:root{
+  --ink:#000;--paper:#fff;--purple:#6638B6;--soft:#F5F5F5;--frost:#EFF1F4;--silver:#D9DDE3;--sub:#4A4A4A;
+  --font:"Noto Sans CJK SC","Source Han Sans SC","PingFang SC",Geist,"Helvetica Neue",system-ui,sans-serif;
+}
+html,body{height:100%;margin:0;background:var(--paper);color:var(--ink)}
+body{font-family:var(--font);-webkit-tap-highlight-color:transparent;overscroll-behavior:none;font-size:clamp(16px,4.2vw,20px)}
+[hidden]{display:none!important}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+
+.app{display:flex;flex-direction:column;min-height:100vh;min-height:100dvh;max-width:600px;margin:0 auto;padding:16px 20px 14px;
+  border-left:6px solid var(--purple)}
+/* top bar: logo · progress · demo */
+.top{display:flex;align-items:center;gap:12px;min-height:48px;flex:none}
+.logo{display:block;height:30px;width:auto}
+.logo svg{height:100%;width:auto;display:block}
+.top .spacer{flex:1}
+.stepno{font-weight:800;font-size:.8em;letter-spacing:1px;font-variant-numeric:tabular-nums}
+.demo-btn{min-width:56px;min-height:48px;border:1.5px dashed var(--ink);background:var(--paper);font-size:.75em;font-weight:700;padding:0 10px}
+.dots{display:flex;gap:6px;margin:10px 0 0;flex:none}
+.dots i{display:block;height:8px;flex:1;border:1.5px solid var(--ink);background:var(--paper)}
+.dots i.done{background:var(--ink)}
+.dots i.cur{background:var(--purple);border-color:var(--ink);height:8px;outline:2px solid var(--ink);outline-offset:1px}
+
+/* screen body */
+.screen{flex:1;display:flex;flex-direction:column;padding-top:22px;min-height:0}
+.kicker{margin:0 0 6px;font-size:.78em;font-weight:800;letter-spacing:2px}
+h1{margin:0 0 10px;font-size:1.75em;line-height:1.25;font-weight:900;letter-spacing:-.5px}
+.lead{margin:0 0 18px;font-size:1em;line-height:1.65;color:var(--ink)}
+.note{font-size:.8em;line-height:1.6;color:var(--sub);margin:10px 0 0}
+.grow{flex:1}
+.illus{display:flex;justify-content:center;margin:6px 0 18px}
+.illus svg{width:min(100%,360px);height:auto}
+
+/* bottom actions */
+.actions{display:flex;gap:10px;flex:none;padding-top:14px}
+.btn{flex:1;min-height:56px;border:2.5px solid var(--ink);background:var(--paper);font-weight:800;font-size:1em;padding:0 12px}
+.btn.primary{background:var(--purple);border-color:var(--ink);color:#fff}
+.btn.primary::after{content:" →"}
+.btn.back::before{content:"← "}
+.btn:active{background:var(--ink);color:#fff}
+.btn:disabled{background:var(--soft);color:var(--sub);border-style:dashed;cursor:default}
+.btn.primary:disabled::after{content:""}
+
+/* option rows (wifi / audio) */
+.list{display:flex;flex-direction:column;gap:10px}
+.opt{display:flex;align-items:center;gap:14px;width:100%;min-height:64px;padding:10px 14px;border:1.5px solid var(--ink);background:var(--paper);text-align:left}
+.opt .ic{flex:none;width:34px;height:34px}
+.opt .ic svg{width:100%;height:100%;display:block}
+.opt .tx{flex:1;min-width:0}
+.opt .tx b{display:block;font-size:1em;font-weight:800}
+.opt .tx small{display:block;font-size:.8em;color:var(--sub);margin-top:2px;line-height:1.4}
+.opt .mark{flex:none;width:28px;height:28px;border:2px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px}
+.opt[aria-checked=true]{border-width:3.5px;padding:8px 12px;background:var(--frost)}
+.opt[aria-checked=true] .mark{background:var(--ink);color:#fff}
+.opt[aria-checked=true] .mark::before{content:"✓"}
+.lock{font-size:.75em;font-weight:700;border:1.5px solid var(--ink);padding:0 5px}
+.pw{display:flex;gap:10px;margin-top:12px}
+.pw input{flex:1;min-width:0;min-height:56px;border:2px solid var(--ink);padding:0 12px;background:var(--paper);border-radius:0}
+.pw .btn{flex:none;min-width:96px}
+.status{margin-top:14px;min-height:56px;display:flex;align-items:center;gap:10px;padding:8px 14px;border:2.5px solid var(--ink);font-weight:800}
+.status .ok{width:28px;height:28px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;flex:none}
+
+/* QR */
+.qr-box{display:flex;flex-direction:column;align-items:center;margin:4px 0 8px}
+.qr{display:block;background:#fff;image-rendering:pixelated;image-rendering:crisp-edges}
+.qr-frame{border:2.5px solid var(--ink);padding:10px;background:#fff}
+.qr-cap{margin-top:10px;font-size:.78em;font-weight:700;letter-spacing:.5px;font-variant-numeric:tabular-nums}
+.how{margin:8px 0 0;padding:0;list-style:none;font-size:.85em;line-height:1.6}
+.how li{display:flex;gap:8px}
+.how li b{flex:none;width:22px;height:22px;border:1.5px solid var(--ink);display:inline-flex;align-items:center;justify-content:center;font-size:.8em;margin-top:2px}
+
+/* pod / big feature rows */
+.feats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:4px 0 14px}
+.feat{border:1.5px solid var(--ink);padding:10px 6px;text-align:center;font-size:.8em;font-weight:700;line-height:1.4}
+.feat svg{display:block;width:30px;height:30px;margin:0 auto 6px}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.steps li{display:flex;gap:12px;align-items:flex-start;line-height:1.55}
+.steps li .n{flex:none;width:30px;height:30px;background:var(--ink);color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center}
+
+/* done / home */
+.big-check{width:84px;height:84px;border:4px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:48px;font-weight:900;margin:8px 0 18px}
+.facts{border-top:2px solid var(--ink);margin:0}
+.facts div{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--ink);font-size:.9em}
+.facts dt{font-weight:700;color:var(--sub)}
+.facts dd{margin:0;font-weight:800;text-align:right}
+.home-hero{border:2.5px solid var(--ink);padding:16px;margin:4px 0 16px}
+.home-hero .state{display:inline-block;font-weight:900;font-size:.8em;letter-spacing:1px;border:2px solid var(--ink);padding:2px 8px;margin-bottom:10px}
+.sys{display:flex;gap:10px;align-items:center;font-size:.75em;font-weight:700}
+.sys svg{width:20px;height:20px;display:block}
+.foot{flex:none;margin-top:14px;padding-top:8px;border-top:1px solid var(--ink);font-size:.7em;line-height:1.5;color:var(--sub);display:flex;justify-content:space-between}
+
+/* full-screen popups (no dimmed backdrop: grey dithers on e-ink) */
+.sheet{position:fixed;inset:0;z-index:20;background:var(--paper);overflow:auto}
+.sheet .app{min-height:100%}
+.alert{display:inline-flex;align-items:center;gap:8px;font-weight:900;font-size:.85em;letter-spacing:1px;border:2.5px solid var(--ink);padding:4px 10px;margin-bottom:12px}
+.alert.warn{background:var(--ink);color:#fff}
+.due{font-size:1.05em;line-height:1.7;margin:0 0 14px}
+.due b{font-variant-numeric:tabular-nums}
+.big-num{font-size:2.6em;font-weight:900;line-height:1;margin:0 4px;font-variant-numeric:tabular-nums}
+.menu{display:flex;flex-direction:column;gap:10px}
+.menu .btn{flex:none;text-align:left}
+
+@media (min-width:700px){.app{max-width:680px;padding:28px 36px 20px}body{font-size:21px}.logo{height:36px}}
