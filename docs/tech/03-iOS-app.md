@@ -40,7 +40,7 @@ ios/
 |---|---|
 | 待支付窗口 | **10 分钟**，超时订单关闭（`Order.paymentWindow`） |
 | 租期起算 | 支付成功即开始（柜机取货不在 Demo 范围） |
-| 即将到期 | 剩余 ≤ 3 天（`Order.expiringThreshold`）；**3 天租期支付后立刻就是「即将到期」**，这是阈值决定的 |
+| 即将到期 | 剩余 ≤ 1 天（`Order.expiringThreshold`，负责人 2026-10-21 定） |
 | 已逾期 | 过了到期时间；续租从**原到期时间**起顺延（逾期部分被覆盖） |
 | 归还推进 | 上门取件：已预约 → 运输中 → 核验中 → 完成；柜机：待交还 → 待核验 → 完成。**演示按钮手动推进** |
 | 近视度数 | 只收 0–1200 的整数；负数、小数、非数字都有专门提示；输入框实时过滤成纯数字。界面写明**不支持散光** |
@@ -72,7 +72,7 @@ ios/
 - **Rom 激活 / 续租**：墨水屏上显示 `xeorental://activate?device=ROM-DEMO-0001` / `xeorental://renew?device=ROM-DEMO-0001`，
   用 app 首页「扫一扫」扫。扫一扫页底部可粘贴链接（模拟器没有相机时用）。
 - **演示工具**：**长按首页左上角 XEO 标志**进入。
-  - 时间快进：租期剩 2 天 / 已逾期 5 小时 / 待支付剩 30 秒 / 恢复真实时间（只改应用内时间，不动系统时间）
+  - 时间快进：租期剩 20 小时 / 已逾期 5 小时 / 待支付剩 30 秒 / 恢复真实时间（只改应用内时间，不动系统时间）
   - 3 秒后发送租期提醒通知（锁屏可见，带「续租 / 稍后提醒」；稍后提醒演示为 1 分钟后再响）
   - 直接模拟三种二维码
   - 清空全部数据
@@ -92,3 +92,17 @@ ios/
   `keyboardType` / `textContentType` / `navigationBarTitleDisplayMode` / `toolbar(.hidden, for: .navigationBar)`。
 - 资源编译：SVG 矢量 Logo、AppIcon（1024 单尺寸）、AccentColor。
 - 运行期行为：通知授权与锁屏动作按钮、`onOpenURL` 冷启动拉起、相机权限弹窗、头围估算的实际数值。
+
+## 命令行编译（2026-10-21 实测）
+
+本机 Xcode 已装但 `xcode-select` 仍指向命令行工具时，不必改系统设置，按命令指定即可：
+
+```bash
+export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer
+xcodebuild -project ios/XEORental.xcodeproj -scheme XEORental -sdk iphonesimulator \
+  -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO build
+```
+
+- Xcode 27.1 / iOS 27.1 SDK：**模拟器编译通过、零警告**，iOS 26.5 模拟器可安装启动；
+  `xcrun simctl openurl <sim> "xeorental://rent?cabinet=XEO-IMAX-DEMO-01"` 弹出系统「在 XEO 租赁中打开」，URL Scheme 注册生效。
+- 仍需真机：相机扫码、ARKit 头围测量、通知动作按钮、真机签名安装。

@@ -101,7 +101,7 @@ public enum OrderError: Error, Equatable, Sendable {
 
 public struct Order: Codable, Identifiable, Equatable, Sendable {
     public static let paymentWindow: TimeInterval = 10 * 60          // owner's decision: 10 minutes
-    public static let expiringThreshold: TimeInterval = 3 * 86_400   // 「即将到期」= ≤ 3 days left
+    public static let expiringThreshold: TimeInterval = 1 * 86_400   // 「即将到期」= ≤ 1 day left (owner, 2026-10-21)
 
     public let id: String
     public let cabinet: String

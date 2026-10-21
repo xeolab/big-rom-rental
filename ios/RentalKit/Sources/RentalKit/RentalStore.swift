@@ -173,16 +173,16 @@ public final class RentalStore: ObservableObject {
     // MARK: demo tools
 
     public enum DemoJump: Sendable {
-        case expiringIn2Days, overdue5Hours, pendingRemaining30s
+        case expiringIn20Hours, overdue5Hours, pendingRemaining30s
     }
 
     /// Moves the demo clock; returns false when there is no order the jump applies to.
     @discardableResult
     public func demoJump(_ jump: DemoJump) -> Bool {
         switch jump {
-        case .expiringIn2Days, .overdue5Hours:
+        case .expiringIn20Hours, .overdue5Hours:
             guard let end = currentRental?.endsAt else { return false }
-            clock.jump(to: end.addingTimeInterval(jump == .expiringIn2Days ? -2 * 86_400 : 5 * 3600))
+            clock.jump(to: end.addingTimeInterval(jump == .expiringIn20Hours ? -20 * 3600 : 5 * 3600))
         case .pendingRemaining30s:
             guard let o = orders.last(where: { $0.status == .pendingPayment }) else { return false }
             clock.jump(to: o.paymentDeadline.addingTimeInterval(-30))

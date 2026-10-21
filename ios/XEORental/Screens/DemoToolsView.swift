@@ -14,7 +14,7 @@ struct DemoToolsView: View {
                 ScreenTitle(title: "演示工具", subtitle: "只用于演示：调整应用内时间、触发提醒、清空数据。不影响手机系统时间。")
 
                 group("时间快进") {
-                    tool("租期剩 2 天（即将到期）", "clock.badge.exclamationmark") { jump(.expiringIn2Days, needs: "租赁中的订单") }
+                    tool("租期剩 20 小时（即将到期）", "clock.badge.exclamationmark") { jump(.expiringIn20Hours, needs: "租赁中的订单") }
                     tool("已逾期 5 小时", "exclamationmark.triangle") { jump(.overdue5Hours, needs: "租赁中的订单") }
                     tool("待支付订单剩 30 秒", "timer") { jump(.pendingRemaining30s, needs: "待支付订单") }
                     tool("恢复真实时间", "arrow.uturn.backward") { store.resetClock(); note = "已恢复真实时间" }

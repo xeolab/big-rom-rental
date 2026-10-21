@@ -27,7 +27,9 @@
   const $ = s => document.querySelector(s);
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const pad = n => String(n).padStart(2, '0');
-  function dueSoon() { const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() + 3); return d; } // 剩 3 天，当天 24:00 到期
+  function dueHome() { const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() + 3); return d; } // 首页示意：3 天后 24:00
+  function dueSoon() { const d = new Date(); d.setHours(0, 0, 0, 0); return d; } // 即将到期：今天 24:00（剩余 ≤ 1 天才提醒）；fmtDay24 按「当天 24:00」显示
+  function hoursLeft() { return Math.max(1, Math.ceil((dueSoon().getTime() + 86400000 - Date.now()) / 3600000)); }
   function fmtDay24(d) { return d.getFullYear() + '年' + (d.getMonth() + 1) + '月' + d.getDate() + '日 24:00'; }
   function fmtTime(d) { return (d.getMonth() + 1) + '月' + d.getDate() + '日 ' + pad(d.getHours()) + ':' + pad(d.getMinutes()); }
   const ICON = {
@@ -138,7 +140,7 @@
 
     home: () => top(-1) + '<section class="screen"><div class="sys"><span>' + ICON.wifi + '</span><span>' + esc(S.wifi || '未连接') + '</span><span class="spacer" style="flex:1"></span><span>' + ICON.battery + '</span><span>86%</span></div>' +
       '<div class="home-hero" style="margin-top:14px"><span class="state">已激活 · 已就绪</span><h1>Rom 已就绪</h1><p class="lead" style="margin:0">戴上 BIG，在 Rom 上选择影片，进入虚拟影院。</p></div>' +
-      '<dl class="facts"><div><dt>设备</dt><dd>' + DEVICE + '</dd></div><div><dt>租期至</dt><dd>' + fmtDay24(dueSoon()) + '（示意）</dd></div><div><dt>音频</dt><dd>' +
+      '<dl class="facts"><div><dt>设备</dt><dd>' + DEVICE + '</dd></div><div><dt>租期至</dt><dd>' + fmtDay24(dueHome()) + '（示意）</dd></div><div><dt>音频</dt><dd>' +
       ((AUDIO.find(a => a.id === S.audio) || {}).name || '—') + '</dd></div></dl>' +
       '<p class="note">再次开机直接进入这里，无需重复联网与激活。右上角「演示」可触发到期 / 逾期提醒。</p><div class="grow"></div>' + foot + '</section>',
   };
@@ -152,7 +154,7 @@
 
     soon: () => '<div class="app"><div class="top"><span class="logo">' + LOGO + '</span><span class="spacer"></span><span class="sys">' + ICON.wifi + ICON.battery + '</span></div>' +
       '<section class="screen"><span class="alert">⏰ 租期提醒</span><h1>租期即将到期</h1>' +
-      '<p class="due">您的 Rom 设备租期还有<span class="big-num">3</span>天<br>到期时间：<b>' + fmtDay24(dueSoon()) + '</b></p>' +
+      '<p class="due">您的 Rom 设备租期还剩<span class="big-num">' + hoursLeft() + '</span>小时<br>到期时间：<b>今天 24:00</b></p>' +
       '<div class="illus">' + ILLUS.welcome + '</div><p class="lead">继续沉浸，探索更大的世界。<br>可在 XEO 租赁 App 中续租或预约归还。</p><div class="grow"></div>' +
       '<div class="actions"><button class="btn" data-act="close">稍后提醒</button><button class="btn primary" data-act="soonQr">去续租</button></div></section></div>',
 
