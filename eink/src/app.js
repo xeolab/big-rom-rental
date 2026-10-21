@@ -30,7 +30,7 @@
   const pad = n => String(n).padStart(2, '0');
   function dueHome() { const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() + 3); return d; } // 首页示意：3 天后 24:00
   function dueSoon() { const d = new Date(); d.setHours(0, 0, 0, 0); return d; } // 即将到期：今天 24:00（剩余 ≤ 1 天才提醒）；fmtDay24 按「当天 24:00」显示
-  function hoursLeft() { return Math.max(1, Math.ceil((dueSoon().getTime() + 86400000 - Date.now()) / 3600000)); }
+  function hoursLeft() { return Math.max(1, Math.floor((dueSoon().getTime() + 86400000 - Date.now()) / 3600000)); } // 向下取整：剩 23 小时 40 分显示 23
   function fmtDay24(d) { return d.getFullYear() + '年' + (d.getMonth() + 1) + '月' + d.getDate() + '日 24:00'; }
   function fmtTime(d) { return (d.getMonth() + 1) + '月' + d.getDate() + '日 ' + pad(d.getHours()) + ':' + pad(d.getMinutes()); }
   const ICON = {
@@ -170,7 +170,10 @@
   };
 
   // ---------- render ----------
+  // The e-ink browser (Onyx Chromium 85) has no dvh and its 100vh includes the URL bar; use the real visible height.
+  function fitHeight() { document.documentElement.style.setProperty('--app-h', window.innerHeight + 'px'); }
   function render() {
+    fitHeight();
     const root = $('#root');
     root.innerHTML = '<div class="app">' + SCREENS[S.step]() + '</div>';
     let sheet = $('#sheet');

@@ -8,6 +8,7 @@
 - **两端：** `ios/`（SwiftUI，租与还）+ `eink/`（单文件 HTML，Rom 首次激活与到期提醒）。**无后端、无网络请求、无真实支付 / 登录 / 物流。**
 - **两端唯一接口是二维码 URL**（scheme `xeorental`），契约在 `docs/tech/01` §2——**改契约先改文档，两端一起改**。
 - **墨水屏端必须是单个自包含 HTML**（不许外链 / fetch / import / 相对资源），遵守墨水屏 UX 硬约束：禁动画、高对比、触控 ≥48dp、不靠颜色传达关键信息。
+- **墨水屏浏览器下限 = Onyx Chromium 85**（控制端从文件管理器打开 HTML 用的自带浏览器）：不许用 85 之后的 JS / CSS（如 `inset`、`dvh`、`replaceChildren`）；`eink/build.mjs` 会扫源码、命中即构建失败。桌面 Chrome 测不出这类问题，**改完要上真机看**。
 - **iOS 只用免费个人团队可签的能力**：不加 Sign in with Apple 等付费账号能力（Apple 登录是占位按钮）。
 - **业务逻辑放 `ios/RentalKit`（纯 Swift 包）**，`swift run RentalKitChecks` 必须通过——这是没有 Xcode 时唯一能跑的自检。
 - **负责人已定**：支付倒计时 10 分钟；度数只能填非负整数；头围用前置摄像头真实测量；归还进度由演示按钮手动推进；逾期弹窗只提供「关闭，继续使用」。

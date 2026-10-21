@@ -10,7 +10,7 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;overscroll-
 button,input{font:inherit;color:inherit}
 button{cursor:pointer;touch-action:manipulation;user-select:none;-webkit-user-select:none}
 
-.app{display:flex;flex-direction:column;min-height:100vh;min-height:100dvh;max-width:600px;margin:0 auto;padding:16px 20px 14px;
+.app{display:flex;flex-direction:column;min-height:100vh;min-height:var(--app-h,100vh);max-width:600px;margin:0 auto;padding:16px 20px 14px;
   border-left:6px solid var(--purple)}
 /* top bar: logo · progress · demo */
 .top{display:flex;align-items:center;gap:12px;min-height:48px;flex:none}
@@ -94,7 +94,7 @@ h1{margin:0 0 10px;font-size:1.75em;line-height:1.25;font-weight:900;letter-spac
 .foot{flex:none;margin-top:14px;padding-top:8px;border-top:1px solid var(--ink);font-size:.7em;line-height:1.5;color:var(--sub);display:flex;justify-content:space-between}
 
 /* full-screen popups (no dimmed backdrop: grey dithers on e-ink) */
-.sheet{position:fixed;inset:0;z-index:20;background:var(--paper);overflow:auto}
+.sheet{position:fixed;top:0;right:0;bottom:0;left:0;z-index:20;background:var(--paper);overflow:auto}
 .sheet .app{min-height:100%}
 .alert{display:inline-flex;align-items:center;gap:8px;font-weight:900;font-size:.85em;letter-spacing:1px;border:2.5px solid var(--ink);padding:4px 10px;margin-bottom:12px}
 .alert.warn{background:var(--ink);color:#fff}
