@@ -10,3 +10,5 @@ xcuserdata/
 docs/reference/
 # blurt 录屏会话
 .blurt/
+# 并行开发的 worktree
+.claude/worktrees/

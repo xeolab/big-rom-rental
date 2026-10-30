@@ -1,6 +1,12 @@
 # CLAUDE.md —— big-rom-rental（BIG + Rom 租赁体验 Demo）
 
+@~/XEO/xeo-pm/MONO.md
+
+> **看不到上面这份 MONO.md 的正文**（无头模式 `claude -p`、后台 agent、或首次确认被拒时，仓库外的引用不会展开）**→ 开工前先读 `~/XEO/xeo-pm/MONO.md`。**
+
 > 新会话先读本文件，再读 `docs/tech/01-架构与双端契约.md`。语言：**中文**。负责人：本人（PM/UX）。
+> 跨仓库的规矩在私有仓库 `xeolab/xeo-pm` 的 `MONO.md`（上一行引用，需克隆在 `~/XEO/xeo-pm`）；产品上下文在它的 `project/rom/`。
+> ⚠️ **本仓库公开**：私有仓库里的内容、人名、客户信息不要搬进来。
 > 姊妹仓库：`xeolab/xeo-big-movie-box`（墨水屏观影盒子，本 Demo 的墨水屏端是它的「开机前」一段）。
 
 ## 1. 当前生效的约束
@@ -25,5 +31,5 @@
 
 ## 3. 工作约定
 
-- 改动走 `feat/` `fix/` `docs/` 分支 → `gh pr create` → 负责人网页合并 → `git pull --ff-only origin main`。
+- 改动走分支 → PR → 负责人网页合并 → 同步主副本；主副本只留在 `main`，改动开 worktree（xeo-pm `MONO.md` §3–§4）。
 - 每次能力落地或验证状态变化，当场改验收清单对应行。
