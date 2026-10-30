@@ -1,9 +1,11 @@
 # CLAUDE.md —— big-rom-rental（BIG + Rom 租赁体验 Demo）
 
-@../xeo-pm/MONO.md
+@~/XEO/xeo-pm/MONO.md
+
+> **看不到上面这份 MONO.md 的正文**（无头模式 `claude -p`、后台 agent、或首次确认被拒时，仓库外的引用不会展开）**→ 开工前先读 `~/XEO/xeo-pm/MONO.md`。**
 
 > 新会话先读本文件，再读 `docs/tech/01-架构与双端契约.md`。语言：**中文**。负责人：本人（PM/UX）。
-> 跨仓库的规矩在私有仓库 `xeolab/xeo-pm` 的 `MONO.md`（上一行引用，需并排克隆在 `../xeo-pm`）；产品上下文在它的 `project/rom/`。
+> 跨仓库的规矩在私有仓库 `xeolab/xeo-pm` 的 `MONO.md`（上一行引用，需克隆在 `~/XEO/xeo-pm`）；产品上下文在它的 `project/rom/`。
 > ⚠️ **本仓库公开**：私有仓库里的内容、人名、客户信息不要搬进来。
 > 姊妹仓库：`xeolab/xeo-big-movie-box`（墨水屏观影盒子，本 Demo 的墨水屏端是它的「开机前」一段）。
 
